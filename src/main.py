@@ -121,7 +121,8 @@ def beginning_dev_checks():
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}show help menu = {help_mode}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location = {target_location}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}current working directory = {pwd}")
-    developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location (full) = {os.path.join(pwd, target_location)}")
+    if not target_location == None:
+        developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location (full) = {os.path.join(pwd, target_location)}")
 
 # ! COMMENT OUT BELOW WHEN BUILDING
 if __name__ == "__main__":
