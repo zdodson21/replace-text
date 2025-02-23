@@ -2,3 +2,5 @@ dist
 build
 replaceText.egg-info
 __pycache__
+.vscode
+.idea
