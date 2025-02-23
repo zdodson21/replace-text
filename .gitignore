@@ -1,0 +1,4 @@
+dist
+build
+replaceText.egg-info
+__pycache__
