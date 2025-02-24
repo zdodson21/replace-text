@@ -1,0 +1,1 @@
+replace-text tests/test-file.txt -o test -r new;
