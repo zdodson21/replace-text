@@ -13,7 +13,7 @@ def developer_mode(message):
 
 def parse_args():
     """
-    Parses arguements passed into the command line and initializes global variables.
+    Parses arguments passed into the command line and initializes global variables.
     Returns true if "-h" or "--help" flag passed (to prevent code from moving forward), returns false if not.
     """
 
@@ -38,7 +38,7 @@ def parse_args():
     
     parser = argparse.ArgumentParser(add_help=False)
 
-    # ! Arguements
+    # ! Arguments
     parser.add_argument("target", help="The target file or directory of files", 
                         nargs='?', default="")
 
@@ -52,15 +52,19 @@ def parse_args():
                         action="store_true")
     
     parser.add_argument("-o", "--original-text",
-                        help="The text to be replaced",
+                        help="the text to be replaced",
                         default="", metavar="")
     
     parser.add_argument("-r", "--replacement-text",
-                        help="The new text to replace the old",
+                        help="the new text to replace the old",
                         default="", metavar="")
     
+    parser.add_argument("-v", "--version",
+                         help="displays the version number",
+                         action="store_true")
+    
 
-    # Set stuff based on arguements and flags
+    # Set stuff based on arguments and flags
     args = parser.parse_args()
     if not args.target == '':
         target_location = args.target
@@ -73,6 +77,10 @@ def parse_args():
 
     if args.original_text:
         original_text = args.original_text
+
+    if args.version:
+        print('1.1.0')
+        return True
     
     if args.help:
         parser.print_help()
@@ -83,17 +91,17 @@ def parse_args():
 
 def replace_text():  
     if not parse_args():
-        if not target_location == None:
+        if not target_location is None:
             beginning_dev_checks()
             developer_mode("Starting package...")
             
             full_dir = os.path.join(pwd, target_location)
             
             global original_text
-            if original_text == None:
+            if original_text is None:
                 original_text = input("What text should be replaced: ")
             global replacement_text
-            if replacement_text == None:
+            if replacement_text is None:
                 replacement_text = input("Replacement text: ")
 
             if not (os.path.isdir(full_dir)):
@@ -139,11 +147,11 @@ def beginning_dev_checks():
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}show help menu = {help_mode}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location = {target_location}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}current working directory = {pwd}")
-    if not original_text == None:
+    if not original_text is None:
         developer_mode(f"{Colors.blue}(dev check) {Colors.red}original text = {original_text}")
-    if not replacement_text == None:
+    if not replacement_text is None:
         developer_mode(f"{Colors.blue}(dev check) {Colors.red}replacement text = {replacement_text}")
-    if not target_location == None:
+    if not target_location is None:
         developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location (full) = {os.path.join(pwd, target_location)}")
 
 # ! COMMENT OUT BELOW WHEN BUILDING

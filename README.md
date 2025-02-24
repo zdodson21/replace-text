@@ -10,7 +10,7 @@
 Run `replace-text -h` or `replace-text --help` will display the help menu
 
 ```
-usage: replace-text [-d] [-h] [-o] [-r] [target]
+usage: replace-text [-d] [-h] [-o] [-r] [-v] [target]
 
 positional arguments:
   target                The target file or directory of files
@@ -19,9 +19,10 @@ options:
   -d, --developer       enables developer console output
   -h, --help            show this help message and exit
   -o , --original-text 
-                        The text to be replaced
+                        the text to be replaced
   -r , --replacement-text 
-                        The new text to replace the old
+                        the new text to replace the old
+  -v, --version         displays the version number
 ```
 
 ## Contributing
