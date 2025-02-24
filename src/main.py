@@ -1,17 +1,10 @@
 import argparse
-import pathlib
 import os
 
 class Colors:
     red='\033[91m'
-    GREEN='\033[92m'
     yellow='\033[93m'
-    ORANGE='\033[94m'
     blue='\033[94m'
-    MAGENTA='\033[95m'
-    CYAN='\033[96m'
-    gray='\033[90m'
-    RESET='\033[0m'
 
 def developer_mode(message):
     if developer_mode_enabled:
@@ -25,14 +18,20 @@ def parse_args():
     """
 
     # Global Variable Declaration
+    global target_location
+    target_location = None
+
     global developer_mode_enabled
     developer_mode_enabled = False
     
     global help_mode
     help_mode = False
-    
-    global target_location
-    target_location = None
+
+    global replacement_text
+    replacement_text = None
+
+    global original_text
+    original_text = None 
 
     global pwd
     pwd = os.getcwd()
@@ -41,7 +40,7 @@ def parse_args():
 
     # ! Arguements
     parser.add_argument("target", help="The target file or directory of files", 
-                        nargs='?', default='')
+                        nargs='?', default="")
 
     # ! Flags 
     parser.add_argument("-d", "--developer", 
@@ -51,6 +50,15 @@ def parse_args():
     parser.add_argument("-h", "--help",
                         help="show this help message and exit",
                         action="store_true")
+    
+    parser.add_argument("-o", "--original-text",
+                        help="The text to be replaced",
+                        default="", metavar="")
+    
+    parser.add_argument("-r", "--replacement-text",
+                        help="The new text to replace the old",
+                        default="", metavar="")
+    
 
     # Set stuff based on arguements and flags
     args = parser.parse_args()
@@ -59,6 +67,12 @@ def parse_args():
 
     if args.developer:
         developer_mode_enabled = True
+
+    if args.replacement_text:
+        replacement_text = args.replacement_text
+
+    if args.original_text:
+        original_text = args.original_text
     
     if args.help:
         parser.print_help()
@@ -69,14 +83,18 @@ def parse_args():
 
 def replace_text():  
     if not parse_args():
-        try:
+        if not target_location == None:
             beginning_dev_checks()
             developer_mode("Starting package...")
             
             full_dir = os.path.join(pwd, target_location)
             
-            original_text = input("What text should be replaced: ")
-            replacement_text = input("Replacement text: ")
+            global original_text
+            if original_text == None:
+                original_text = input("What text should be replaced: ")
+            global replacement_text
+            if replacement_text == None:
+                replacement_text = input("Replacement text: ")
 
             if not (os.path.isdir(full_dir)):
                 developer_mode(f"Analyzing file: {full_dir}")
@@ -84,7 +102,7 @@ def replace_text():
             else:
                 developer_mode(f"Analyzing directory: {full_dir}")
                 directory_process(original_text, replacement_text, full_dir)
-        except:
+        else:
             print('Please ensure you have supplied a file or directory to be affected')
 
     else:
@@ -121,6 +139,10 @@ def beginning_dev_checks():
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}show help menu = {help_mode}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location = {target_location}")
     developer_mode(f"{Colors.blue}(dev check) {Colors.red}current working directory = {pwd}")
+    if not original_text == None:
+        developer_mode(f"{Colors.blue}(dev check) {Colors.red}original text = {original_text}")
+    if not replacement_text == None:
+        developer_mode(f"{Colors.blue}(dev check) {Colors.red}replacement text = {replacement_text}")
     if not target_location == None:
         developer_mode(f"{Colors.blue}(dev check) {Colors.red}target location (full) = {os.path.join(pwd, target_location)}")
 
