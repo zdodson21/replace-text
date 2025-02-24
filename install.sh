@@ -1,1 +1,1 @@
-pip install dist/replace_text-0.0.1-py3-none-any.whl --force-reinstall;
+pip install dist/replace_text-1.0.0-py3-none-any.whl --force-reinstall;
